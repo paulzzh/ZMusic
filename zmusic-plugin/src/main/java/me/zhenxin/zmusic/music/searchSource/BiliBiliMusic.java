@@ -12,7 +12,8 @@ public class BiliBiliMusic {
         try {
             Gson gson = new GsonBuilder().create();
             String musicId;
-            if (keyword.contains("-id:")) {
+            String key = keyword.toLowerCase();
+            if (key.contains("-id:au")||key.contains("-id:av")||key.contains("-id:bv")) {
                 musicId = keyword.split("-id:")[1];
             } else {
                 keyword = URLEncoder.encode(keyword, "UTF-8");
@@ -22,38 +23,15 @@ public class BiliBiliMusic {
                 JsonObject searchResult = searchJson.get("data").getAsJsonObject().get("result").getAsJsonArray().get(0).getAsJsonObject();
                 musicId = searchResult.get("id").getAsString();
             }
-            String getInfo = "https://www.bilibili.com/audio/music-service-c/web/song/info?sid=" + musicId;
-            String infoJsonText = NetUtils.getNetStringBiliBiliGZip(getInfo, null);
+            String getInfo = Config.bilibiliApiRoot + "?id=" + musicId;
+            String infoJsonText = NetUtils.getNetStringBiliBili(getInfo, null);
             infoJsonText = infoJsonText.trim();
             JsonObject infoJson = gson.fromJson(infoJsonText, JsonObject.class);
             String musicName = infoJson.get("data").getAsJsonObject().get("title").getAsString();
             String musicSinger = infoJson.get("data").getAsJsonObject().get("author").getAsString();
             int musicTime = infoJson.get("data").getAsJsonObject().get("duration").getAsInt();
             String lyric = infoJson.get("data").getAsJsonObject().get("lyric").getAsString();
-            if (!lyric.isEmpty()) {
-                lyric = NetUtils.getNetString(lyric, null);
-            }
-            String getUrl = "https://m.bilibili.com/audio/au" + musicId;
-            String urlHtml = NetUtils.getNetString(getUrl, null);
-            String musicUrl = urlHtml
-                    .split("<audio preload=\"auto\" src=\"")[1]
-                    .split("\"")[0];
-            musicUrl = musicUrl.replaceAll("&amp;", "&");
-
-            JsonObject data = new JsonObject();
-            data.addProperty("account", Config.vipAccount);
-            data.addProperty("secret", Config.vipSecret);
-            data.addProperty("id", "bilibili_" + musicId);
-            data.addProperty("url", musicUrl);
-            String res = NetUtils.postNetString("https://api.zhenxin.me/zmusic/vip/m4a2mp3", null, data);
-            JsonObject resJson = gson.fromJson(res, JsonObject.class);
-            if (resJson.get("code").getAsInt() == 200) {
-                JsonObject dataJson = resJson.get("data").getAsJsonObject();
-                String name = dataJson.get("name").getAsString();
-                musicUrl = "https://api.zhenxin.me/zmusic/vip/download/" + name;
-            } else {
-                throw new Exception("M4A转MP3失败");
-            }
+            String musicUrl = infoJson.get("data").getAsJsonObject().get("musicUrl").getAsString();
             JsonObject returnJSON = new JsonObject();
             returnJSON.addProperty("id", musicId);
             returnJSON.addProperty("url", musicUrl);
@@ -84,7 +62,7 @@ public class BiliBiliMusic {
                 String musicSinger = json.getAsJsonObject().get("author").getAsString();
                 String musicId = json.getAsJsonObject().get("id").getAsString();
                 JsonObject returnJSONObj = new JsonObject();
-                returnJSONObj.addProperty("id", musicId);
+                returnJSONObj.addProperty("id", "au" + musicId);
                 returnJSONObj.addProperty("name", musicName);
                 returnJSONObj.addProperty("singer", musicSinger);
                 returnJSON.add(returnJSONObj);

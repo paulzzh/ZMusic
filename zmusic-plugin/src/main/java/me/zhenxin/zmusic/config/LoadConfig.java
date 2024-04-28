@@ -70,10 +70,12 @@ public class LoadConfig {
             neteaseApiRoot += "/";
         }
         Config.neteaseApiRoot = neteaseApiRoot;
+        String bilibiliApiRoot = api.get("bilibili").getAsString();
+        Config.bilibiliApiRoot = bilibiliApiRoot;
         // NeteaseFollow
-        Config.neteaseFollow = config.get("netease-follow").getAsBoolean();
+        //Config.neteaseFollow = config.get("netease-follow").getAsBoolean();
         // VIP
-        JsonObject vip = config.get("vip").getAsJsonObject();
+        /*JsonObject vip = config.get("vip").getAsJsonObject();
         Config.vipAccount = vip.get("account").getAsString();
         Config.vipSecret = vip.get("secret").getAsString();
         if (!Config.vipSecret.equalsIgnoreCase("none")) {
@@ -90,7 +92,7 @@ public class LoadConfig {
                     ZMusic.isVip = dataJson.get("isVip").getAsBoolean();
                 }
             });
-        }
+        }*/
         // Music
         JsonObject music = config.get("music").getAsJsonObject();
         Config.money = music.get("money").getAsInt();

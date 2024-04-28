@@ -56,17 +56,10 @@ public class PlayMusic {
                     searchSourceName = "酷我音乐";
                     break;
                 case "bilibili":
-                    if (ZMusic.isVip) {
-                        ZMusic.message.sendNormalMessage("哔哩哔哩音乐需要在插件服务器将M4A转换为MP3。", player);
-                        ZMusic.message.sendNormalMessage("第一次搜索将会耗时很久，如有其他用户使用过，将会返回缓存文件。", player);
-                        ZMusic.message.sendNormalMessage("请耐心等待。。。。", player);
-                        json = BiliBiliMusic.getMusic(searchKey);
-                        searchSourceName = "哔哩哔哩音乐";
-                        break;
-                    } else {
-                        ZMusic.message.sendErrorMessage("错误,本服务器未授权.", player);
-                        return;
-                    }
+                    ZMusic.message.sendNormalMessage("第一次搜索将会耗时很久，请耐心等待。。。。", player);
+                    json = BiliBiliMusic.getMusic(searchKey);
+                    searchSourceName = "哔哩哔哩音乐";
+                    break;
                 case "qq":
                     ZMusic.message.sendErrorMessage("由于不可抗力因素。", player);
                     ZMusic.message.sendErrorMessage("QQ音乐搜索源已于2.5.0版本移除, API服务已关闭。", player);

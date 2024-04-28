@@ -14,11 +14,12 @@ public class Config {
     public static boolean checkUpdate;
     // Api
     public static String neteaseApiRoot;
+    public static String bilibiliApiRoot;
     // NeteaseFollow
     public static boolean neteaseFollow;
     // VIP
-    public static String vipAccount;
-    public static String vipSecret;
+    //public static String vipAccount;
+    //public static String vipSecret;
     // Music
     public static int money;
     public static int cooldown;

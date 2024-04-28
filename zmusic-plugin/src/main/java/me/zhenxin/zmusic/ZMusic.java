@@ -29,7 +29,7 @@ public final class ZMusic {
     public static File dataFolder;
     public static String thisVer;
     public static int thisVerCode = 202403070;
-    public static boolean isVip = false;
+    //public static boolean isVip = false;
     public static boolean isViaVer = true;
     public static boolean isEnable = true;
     public static boolean isEnableEd = false;
@@ -59,7 +59,7 @@ public final class ZMusic {
         new LoadConfig().load();
         ZMusic.log.sendNormalMessage("成功加载配置文件!");
         ZMusic.runTask.runAsync(() -> {
-            OtherUtils.checkUpdate(sender, false);
+            //OtherUtils.checkUpdate(sender, false);
             new LoadLang().load();
             if (NeteaseLogin.isLogin()) {
                 NeteaseLogin.refresh();
