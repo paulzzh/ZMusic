@@ -54,6 +54,8 @@ public class LoadLang {
         // 全部点击事件
         JsonObject click = lang.get("click").getAsJsonObject();
         Lang.clickPlay = click.get("play").getAsString();
+        Lang.clickStop = click.get("stop").getAsString();
+        Lang.clickLoop = click.get("loop").getAsString();
         Lang.clickPlayText = click.get("playText").getAsString();
         Lang.clickMusic = click.get("music").getAsString();
         Lang.clickMusicText = click.get("musicText").getAsString();

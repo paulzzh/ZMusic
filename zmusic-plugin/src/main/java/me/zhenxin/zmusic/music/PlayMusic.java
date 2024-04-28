@@ -167,10 +167,19 @@ public class PlayMusic {
             }
             ZMusic.music.play(musicUrl, p);
             time = System.currentTimeMillis() - time;
-            ZMusic.message.sendNormalMessage(Lang.playSuccess
+            TextComponent success = new TextComponent(Lang.playSuccess
                     .replaceAll("%source%", searchSourceName)
                     .replaceAll("%fullName%", musicFullName)
-                    .replaceAll("%time%", String.valueOf(time)), p);
+                    .replaceAll("%time%", String.valueOf(time)));
+            TextComponent stop = new TextComponent("§r[§e" + Lang.clickStop + "§r]");
+            stop.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zm stop"));
+            stop.setColor(ChatColor.YELLOW);
+            success.addExtra(stop);
+            TextComponent loop = new TextComponent("§r[§e" + Lang.clickLoop + "§r]");
+            loop.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zm loop"));
+            loop.setColor(ChatColor.YELLOW);
+            success.addExtra(loop);
+            ZMusic.message.sendJsonMessage(success, p);
             String title = "§a" + Lang.playing + "\n§e" + musicFullName;
             OtherUtils.sendAdv(p, title);
         }
