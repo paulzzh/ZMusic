@@ -10,6 +10,8 @@ public class Lang {
     public static String playSuccess;
     public static String playAllSource;
     public static String clickPlay;
+    public static String clickStop;
+    public static String clickLoop;
     public static String clickPlayText;
     public static String clickMusic;
     public static String clickMusicText;
